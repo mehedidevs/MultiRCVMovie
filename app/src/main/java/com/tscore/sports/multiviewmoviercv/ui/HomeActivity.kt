@@ -5,30 +5,24 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.tscore.sports.multiviewmoviercv.base.BaseActivity
 import com.tscore.sports.multiviewmoviercv.databinding.ActivityMainBinding
 import com.tscore.sports.multiviewmoviercv.states.UiState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+
     private val viewModel: HomeViewModel by viewModels()
-
-    lateinit var binding: ActivityMainBinding
-
-    val adapter: HomeAdapter by lazy {
+    private val adapter: HomeAdapter by lazy {
         HomeAdapter()
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onStart() {
+        super.onStart()
+
         binding.recyclerView.adapter = adapter
-
-
-
-
         viewModel.homeData.observe(this) {
             when (it) {
                 is UiState.Error -> {
@@ -55,7 +49,7 @@ class HomeActivity : AppCompatActivity() {
             }
 
         }
-
-
     }
+
+
 }
