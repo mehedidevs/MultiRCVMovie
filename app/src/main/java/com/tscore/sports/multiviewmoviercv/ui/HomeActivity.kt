@@ -1,12 +1,12 @@
 package com.tscore.sports.multiviewmoviercv.ui
 
-import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import com.tscore.sports.multiviewmoviercv.base.BaseActivity
 import com.tscore.sports.multiviewmoviercv.databinding.ActivityMainBinding
+import com.tscore.sports.multiviewmoviercv.models.HomeRCVItem
 import com.tscore.sports.multiviewmoviercv.states.UiState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +23,22 @@ class HomeActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         super.onStart()
 
         binding.recyclerView.adapter = adapter
+        adapter.itemClick = { v, data, i ->
+            val msg = when (data) {
+                is HomeRCVItem.ResponseDirectorItem -> "Director"
+                is HomeRCVItem.ResponseMoviesItem -> "Movie"
+                is HomeRCVItem.Title -> "Title"
+            }
+
+            Log.d("TAG", "onStart: $msg")
+
+            Toast.makeText(this, "msg",Toast.LENGTH_SHORT).show()
+
+
+        }
+
+
+
         viewModel.homeData.observe(this) {
             when (it) {
                 is UiState.Error -> {
@@ -42,7 +58,6 @@ class HomeActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
 
                     adapter.homeItems = it.data!!
-
 
 
                 }

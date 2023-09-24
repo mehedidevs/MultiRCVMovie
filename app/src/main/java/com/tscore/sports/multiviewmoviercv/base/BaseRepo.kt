@@ -34,28 +34,3 @@ abstract class BaseRepo {
 
 }
 
-
-/*
-abstract class BaseRepository {
-
-    suspend fun <T> safeApiCall(
-        apiCall: suspend () -> T
-    ): DataState<T> {
-        return withContext(Dispatchers.IO) {
-            try {
-                DataState.Success(apiCall.invoke())
-            } catch (throwable: Throwable) {
-                when (throwable) {
-                    is HttpException -> {
-                        DataState.Error(false, throwable.code(), throwable.response()?.errorBody())
-                    }
-                    else -> {
-                        DataState.Error(true, null, null)
-                    }
-                }
-            }
-        }
-    }
-
-}
- */

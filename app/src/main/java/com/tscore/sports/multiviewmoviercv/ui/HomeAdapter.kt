@@ -1,6 +1,7 @@
 package com.tscore.sports.multiviewmoviercv.ui
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tscore.sports.multiviewmoviercv.R
@@ -16,6 +17,8 @@ class HomeAdapter : RecyclerView.Adapter<VH>() {
             field = value
             notifyDataSetChanged()
         }
+
+     var itemClick: ((v: View, item: HomeRCVItem, position: Int) -> Unit)? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -57,6 +60,9 @@ class HomeAdapter : RecyclerView.Adapter<VH>() {
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
+
+
+
         when (holder) {
             is VH.DirectorVH -> holder.bind(homeItems[position] as HomeRCVItem.ResponseDirectorItem)
             is VH.MovieVH -> holder.bind(homeItems[position] as HomeRCVItem.ResponseMoviesItem)
